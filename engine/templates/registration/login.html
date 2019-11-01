@@ -1,0 +1,20 @@
+{% extends 'engine/base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+  <h2>Login</h2>
+  <form method="post" class="form-group">
+    {% csrf_token %}
+    {% for field in form.visible_fields %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field|add_class:"form-control" }}
+      </div>
+    {% endfor %}
+
+    <div class="form-group">
+      <input type="submit" class="btn btn-success" value="Login">
+    <div>
+  </form>
+{% endblock %}
