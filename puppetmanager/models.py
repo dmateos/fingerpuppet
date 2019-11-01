@@ -7,18 +7,20 @@ class Configuration(models.Model):
     name = models.CharField(max_length=128, null=False)
     data = models.TextField()
 
+    def bake_to_file(self, path: str):
+        with open(path, "w+") as f:
+            f.write(self.data)
+
 
 class Classification(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=128, null=False)
-
     configurations = models.ManyToManyField(Configuration)
 
 
 class Node(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=128, null=False)
-
     classifications = models.ManyToManyField(Classification)
 
     def external_classify(self):

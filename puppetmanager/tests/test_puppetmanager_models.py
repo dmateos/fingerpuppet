@@ -1,5 +1,6 @@
 import pytest
 import yaml
+import mock
 from puppetmanager.models import Node, Classification, Configuration
 
 
@@ -45,3 +46,16 @@ def test_external_classifier_lists_configurations_in_classification():
     yaml_data = node.external_classify()
 
     assert yaml_data == expected_data
+
+
+# Configuration
+def test_configuration_bakes_data_to_file():
+    m = mock.mock_open()
+    with mock.patch("builtins.open", m, create=True):
+        configuration = Configuration(name="testconfiguration")
+        configuration.data = "test data"
+
+        configuration.bake_to_file("/test-path")
+
+        m.assert_called_once_with("/test-path", "w+")
+        m().write.assert_called_once_with("test data")
