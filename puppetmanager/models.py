@@ -19,3 +19,8 @@ class Node(models.Model):
     name = models.CharField(max_length=128, null=False)
 
     classifications = models.ManyToManyField(Configuration)
+
+    def external_classify(self):
+        base_data = {"classes": {}, "parameters": {}, "environment": "production"}
+
+        return base_data
