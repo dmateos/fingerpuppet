@@ -30,7 +30,7 @@ def test_nodeclassify_exceptions_on_multi_parameter():
 
 
 @pytest.mark.django_db
-def test_nodeclassify_command_returns_for_valid_name(capsys):
+def test_nodeclassify_command_prints_yaml_for_valid_name(capsys):
     valid_yaml = """---
 classes: {}
 environment: production
@@ -54,3 +54,19 @@ def test_nodeclassify_creates_new_node_on_missing_name():
     command.handle(None, node_name=["TestNode"])
 
     assert Node.objects.filter(name="TestNode")
+
+
+@pytest.mark.django_db
+def test_nodeclassify_prints_yaml_on_missing_name(capsys):
+    valid_yaml = """---
+classes: {}
+environment: production
+parameters: {}
+
+"""
+
+    command = Command()
+    command.handle(None, node_name=["TestNode"])
+    captured = capsys.readouterr()
+
+    assert captured.out == valid_yaml
