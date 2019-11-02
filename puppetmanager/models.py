@@ -40,7 +40,7 @@ class Node(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=128, null=False)
-    classifications = models.ManyToManyField(Classification, null=True)
+    classifications = models.ManyToManyField(Classification, blank=True)
 
     def __str__(self) -> str:
         return self.name
