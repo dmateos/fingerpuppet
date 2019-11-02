@@ -96,6 +96,17 @@ def test_node_external_classify_doesnt_list_unrelated_configuration():
     assert yaml_data == expected_data
 
 
+@pytest.mark.django_db
+def test_node_update_increments_checkin_count():
+    node = Node(name="test node")
+    node.save()
+
+    node.update()
+    node.update()
+
+    assert node.total_checkins == 2
+
+
 # Configuration
 def test_configuration_turns_into_string():
     configuration = Configuration(name="testconfiguration")

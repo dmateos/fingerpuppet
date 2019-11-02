@@ -64,3 +64,11 @@ def test_nodeclassify_prints_yaml_on_missing_name(capsys):
     captured = capsys.readouterr()
 
     assert captured.out == VALID_YAML
+
+
+# @pytest.mark.django_db
+# def test_nodeclassify_calls_node_update():
+#    with mock.patch("puppetmanager.management.commands.nodeclassify.Node") as nmock:
+#        command = Command()
+#        command.handle(None, node_name=["TestNode"])
+#        nmock.return_value.update.assert_called()

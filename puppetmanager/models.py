@@ -41,6 +41,7 @@ class Node(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=128, null=False)
     classifications = models.ManyToManyField(Classification, blank=True)
+    total_checkins = models.IntegerField(default=0)
 
     def __str__(self) -> str:
         return self.name
@@ -53,3 +54,7 @@ class Node(models.Model):
                 base_data["classes"][config.name] = {}
 
         return yaml.dump(base_data, default_flow_style=False, explicit_start=True)
+
+    def update(self) -> None:
+        self.total_checkins += 1
+        self.save()

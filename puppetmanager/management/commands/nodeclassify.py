@@ -22,4 +22,6 @@ class Command(BaseCommand):
         except Node.DoesNotExist:
             node = Node(name=node_name)
             node.save()
+
+        node.update()
         print(node.external_classify())
