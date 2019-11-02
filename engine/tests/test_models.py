@@ -1,5 +1,4 @@
 import pytest
-
 from engine.models import Account, AppConfiguration
 
 
