@@ -28,6 +28,42 @@ def test_node_external_classify_format():
 @pytest.mark.django_db
 def test_node_external_classify_lists_configurations_in_classification():
     expected_data = {
+        "classes": {"testconfiguration": {}, "testconfiguration2": {}},
+        "parameters": {},
+        "environment": "production",
+    }
+
+    expected_data = yaml.dump(
+        expected_data, default_flow_style=False, explicit_start=True
+    )
+
+    configuration = Configuration(name="testconfiguration")
+    configuration.save()
+
+    configuration2 = Configuration(name="testconfiguration2")
+    configuration2.save()
+
+    classification = Classification()
+    classification.save()
+    classification.configurations.add(configuration)
+
+    classification2 = Classification()
+    classification2.save()
+    classification2.configurations.add(configuration2)
+
+    node = Node(name="test node")
+    node.save()
+    node.classifications.add(classification)
+    node.classifications.add(classification2)
+
+    yaml_data = node.external_classify()
+
+    assert yaml_data == expected_data
+
+
+@pytest.mark.django_db
+def test_node_external_classify_doesnt_list_unrelated_configuration():
+    expected_data = {
         "classes": {"testconfiguration": {}},
         "parameters": {},
         "environment": "production",
@@ -40,9 +76,16 @@ def test_node_external_classify_lists_configurations_in_classification():
     configuration = Configuration(name="testconfiguration")
     configuration.save()
 
+    configuration2 = Configuration(name="testconfiguration2")
+    configuration2.save()
+
     classification = Classification()
     classification.save()
     classification.configurations.add(configuration)
+
+    classification2 = Classification()
+    classification2.save()
+    classification2.configurations.add(configuration2)
 
     node = Node(name="test node")
     node.save()
