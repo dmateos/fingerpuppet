@@ -19,8 +19,7 @@ class Command(BaseCommand):
 
         try:
             node = Node.objects.get(name=node_name)
-            print(node.external_classify())
         except Node.DoesNotExist:
             node = Node(name=node_name)
             node.save()
-            print(node.external_classify())
+        print(node.external_classify())
