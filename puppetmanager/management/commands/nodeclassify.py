@@ -9,8 +9,11 @@ class Command(BaseCommand):
         parser.add_argument("node_name", nargs="+", type=str)
 
     def handle(self, *ags, **options):
-        if len(options["node_name"]) != 1:
-            raise CommandError("only one node name is accepted")
+        try:
+            if len(options["node_name"]) != 1:
+                raise CommandError("only one node name is accepted")
+        except KeyError:
+            raise CommandError("node_name required")
 
         node_name = options["node_name"][0]
 
