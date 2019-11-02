@@ -1,9 +1,20 @@
 import pytest
+import mock
 from puppetmanager.management.commands.nodeclassify import Command
 from puppetmanager.models import Node
 
 
 # NodeClassify
+
+
+def test_nodeclassify_adds_argument_to_django_command_parser():
+    mock_parser = mock.Mock()
+    command = Command()
+    command.add_arguments(mock_parser)
+
+    mock_parser.add_argument.assert_called_with("node_name", nargs="+", type=str)
+
+
 @pytest.mark.django_db
 def test_nodeclassify_exceptions_on_invalid_parameter():
     command = Command()
