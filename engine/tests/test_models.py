@@ -5,7 +5,6 @@ from engine.models import Account, AppConfiguration
 # Account
 def test_account_strings_to_name():
     account = Account(name="Test account")
-
     assert str(account) == "Test account"
 
 

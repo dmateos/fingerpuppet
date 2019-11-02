@@ -7,6 +7,14 @@ from puppetmanager.models import Node
 # NodeClassify
 
 
+VALID_YAML = """---
+classes: {}
+environment: production
+parameters: {}
+
+"""
+
+
 def test_nodeclassify_adds_argument_to_django_command_parser():
     mock_parser = mock.Mock()
     command = Command()
@@ -31,13 +39,6 @@ def test_nodeclassify_exceptions_on_multi_parameter():
 
 @pytest.mark.django_db
 def test_nodeclassify_command_prints_yaml_for_valid_name(capsys):
-    valid_yaml = """---
-classes: {}
-environment: production
-parameters: {}
-
-"""
-
     command = Command()
     node = Node(name="TestNode")
     node.save()
@@ -45,7 +46,7 @@ parameters: {}
     command.handle(None, node_name=["TestNode"])
     captured = capsys.readouterr()
 
-    assert captured.out == valid_yaml
+    assert captured.out == VALID_YAML
 
 
 @pytest.mark.django_db
@@ -58,15 +59,8 @@ def test_nodeclassify_creates_new_node_on_missing_name():
 
 @pytest.mark.django_db
 def test_nodeclassify_prints_yaml_on_missing_name(capsys):
-    valid_yaml = """---
-classes: {}
-environment: production
-parameters: {}
-
-"""
-
     command = Command()
     command.handle(None, node_name=["TestNode"])
     captured = capsys.readouterr()
 
-    assert captured.out == valid_yaml
+    assert captured.out == VALID_YAML
