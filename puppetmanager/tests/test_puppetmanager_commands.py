@@ -4,15 +4,6 @@ from puppetmanager.models import Node
 
 
 # NodeClassify
-
-
-@pytest.mark.django_db
-def test_nodeclassify_accepts_correct_parameter():
-    command = Command()
-    with pytest.raises(Exception):
-        command.handle(None, node_name=["Test"])
-
-
 @pytest.mark.django_db
 def test_nodeclassify_exceptions_on_invalid_parameter():
     command = Command()
@@ -48,4 +39,7 @@ parameters: {}
 
 @pytest.mark.django_db
 def test_nodeclassify_creates_new_node_on_missing_name():
-    pass
+    command = Command()
+    command.handle(None, node_name=["TestNode"])
+
+    assert Node.objects.filter(name="TestNode")

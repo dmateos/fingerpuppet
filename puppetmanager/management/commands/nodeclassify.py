@@ -21,4 +21,6 @@ class Command(BaseCommand):
             node = Node.objects.get(name=node_name)
             print(node.external_classify())
         except Node.DoesNotExist:
-            raise CommandError("node can not be found")
+            node = Node(name=node_name)
+            node.save()
+            print(node.external_classify())
