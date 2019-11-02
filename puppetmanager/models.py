@@ -3,6 +3,10 @@ from django.db import models
 
 
 class Configuration(models.Model):
+    """
+    Represents a puppet recipe.
+    """
+
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=128, null=False)
     data = models.TextField()
@@ -16,6 +20,11 @@ class Configuration(models.Model):
 
 
 class Classification(models.Model):
+    """
+    Classifications are used to classify a node as a certain type of "thing".
+    These hold many configurations that will be applied to a node.
+    """
+
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=128, null=False)
     configurations = models.ManyToManyField(Configuration)
@@ -25,6 +34,10 @@ class Classification(models.Model):
 
 
 class Node(models.Model):
+    """
+    Nodes represent a single physical entity managed by puppet.
+    """
+
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=128, null=False)
     classifications = models.ManyToManyField(Classification)

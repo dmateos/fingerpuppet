@@ -1,0 +1,21 @@
+from django.core.management.base import BaseCommand, CommandError
+from puppetmanager.models import Node
+
+
+class Command(BaseCommand):
+    help = "Returns a puppet compadible external node classifier YAML output."
+
+    def add_arguments(self, parser):
+        parser.add_argument("node_name", nargs="+", type=str)
+
+    def handle(self, *ags, **options):
+        if len(options["node_name"]) != 1:
+            raise CommandError("only one node name is accepted")
+
+        node_name = options["node_name"][0]
+
+        try:
+            node = Node.objects.get(name=node_name)
+            print(node.external_classify())
+        except Node.DoesNotExist:
+            raise CommandError("node can not be found")
