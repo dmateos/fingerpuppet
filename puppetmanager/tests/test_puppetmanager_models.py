@@ -101,6 +101,8 @@ def test_node_update_increments_checkin_count():
     node = Node(name="test node")
     node.save()
 
+    assert node.total_checkins == 0
+
     node.update()
     node.update()
 
