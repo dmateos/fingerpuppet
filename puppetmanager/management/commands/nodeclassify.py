@@ -8,7 +8,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("node_name", nargs="+", type=str)
 
-    def handle(self, *ags, **options):
+    def handle(self, *args, **options):
         try:
             if len(options["node_name"]) != 1:
                 raise CommandError("only one node name is accepted")
@@ -16,7 +16,6 @@ class Command(BaseCommand):
             raise CommandError("node_name required")
 
         node_name = options["node_name"][0]
-
         try:
             node = Node.objects.get(name=node_name)
         except Node.DoesNotExist:
