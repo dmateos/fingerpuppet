@@ -18,6 +18,9 @@ class Configuration(models.Model):
         with open(path, "w+") as f:
             f.write(self.data)
 
+    def check_for_file(self, path: str) -> bool:
+        return False
+
 
 class Classification(models.Model):
     """

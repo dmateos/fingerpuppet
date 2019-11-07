@@ -1,0 +1,9 @@
+{% extends 'engine/base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+  {% for node in object_list %}
+  <p> {{ node.name }} </p>
+  {% endfor %}
+{% endblock %}

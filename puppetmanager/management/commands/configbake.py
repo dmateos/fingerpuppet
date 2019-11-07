@@ -7,4 +7,4 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for config in Configuration.objects.all():
-            config.bake_to_file("{}/{}.{}".format(config.name, "init", "pp"))
+            config.bake_to_file("{}_{}.{}".format(config.name, "init", "pp"))

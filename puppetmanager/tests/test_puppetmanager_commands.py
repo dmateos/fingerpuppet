@@ -78,9 +78,12 @@ def test_nodeclassify_prints_yaml_on_missing_name(capsys):
 @pytest.mark.django_db
 def test_configbake_outputs_valid_recipe_files():
     m_open = mock.mock_open()
-    configuration = Configuration(name="config1", data="{}")
+    configuration = Configuration(name="TestConfig", data="{}")
     configuration.save()
 
     with mock.patch("builtins.open", m_open, create=True):
         command = bakecommand.Command()
         command.handle()
+
+        m_open.assert_called_once_with("TestConfig_init.pp", "w+")
+        m_open().write.assert_called_once_with("{}")

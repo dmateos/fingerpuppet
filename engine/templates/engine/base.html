@@ -16,9 +16,12 @@
         </li>
         {% if user.is_authenticated %}
           <li class="nav-item"> <a class="nav-link" href="/accounts/logout">Logout</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{% url "node_list" %}">Nodes</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{% url "classification_list" %}">Classifications</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{% url "configuration_list" %}">Configurations</a> </li>
         {% else %}
           <li class="nav-item"> <a class="nav-link" href="/accounts/login">Login</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="/register">Register</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{% url "user_register" %}">Register</a> </li>
         {% endif %}
       </ul>
       <form class="form-inline my-2 my-lg-0">

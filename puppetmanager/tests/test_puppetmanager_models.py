@@ -127,6 +127,10 @@ def test_configuration_bake_data_to_file_writes_file():
         m().write.assert_called_once_with("test data")
 
 
+def test_configuration_check_for_file_file_exists_works():
+    pass
+
+
 # Classification
 def test_classification_turns_into_string():
     classification = Classification(name="testclassification")
