@@ -116,19 +116,23 @@ def test_configuration_turns_into_string():
 
 
 def test_configuration_bake_data_to_file_writes_file():
-    m = mock.mock_open()
-    with mock.patch("builtins.open", m, create=True):
-        configuration = Configuration(name="testconfiguration")
-        configuration.data = "test data"
+    m_open = mock.mock_open()
+    with mock.patch("builtins.open", m_open, create=True):
+        with mock.patch("puppetmanager.models.os") as mock_os:
+            mock_os.path.exists.return_value = False
 
-        configuration.bake_to_file("/test-path")
+            configuration = Configuration(name="TestConfig")
+            configuration.data = "{}"
 
-        m.assert_called_once_with("/test-path", "w+")
-        m().write.assert_called_once_with("test data")
+            configuration.bake_to_file("/etc/fingerpuppet")
 
-
-def test_configuration_check_for_file_file_exists_works():
-    pass
+            mock_os.makedirs.assert_called_with(
+                "/etc/fingerpuppet/TestConfig/manifests"
+            )
+            m_open.assert_called_once_with(
+                "/etc/fingerpuppet/TestConfig/manifests/init.pp", "w+"
+            )
+            m_open().write.assert_called_once_with("{}")
 
 
 # Classification

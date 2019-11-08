@@ -1,4 +1,5 @@
 import yaml
+import os
 from django.db import models
 
 
@@ -15,7 +16,11 @@ class Configuration(models.Model):
         return self.name
 
     def bake_to_file(self, path: str) -> None:
-        with open(path, "w+") as f:
+        config_path = "{}/{}/manifests".format(path, self.name)
+        if not os.path.exists(config_path):
+            os.makedirs(config_path)
+
+        with open("{}/init.pp".format(config_path), "w+") as f:
             f.write(self.data)
 
 

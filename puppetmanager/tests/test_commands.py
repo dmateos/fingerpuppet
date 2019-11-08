@@ -2,7 +2,7 @@ import pytest
 import mock
 import puppetmanager.management.commands.nodeclassify as ncommand
 import puppetmanager.management.commands.configbake as bakecommand
-from puppetmanager.models import Node, Configuration
+from puppetmanager.models import Node
 
 
 # NodeClassify
@@ -84,36 +84,16 @@ def test_configbake_adds_argument_to_django_command_parser():
 
 
 @pytest.mark.django_db
-def test_configbake_outputs_valid_recipe_files():
-    m_open = mock.mock_open()
-    configuration = Configuration(name="TestConfig", data="{}")
-    configuration.save()
+def test_configbake_bakes_each_config_to_file():
+    mock_configs = [mock.Mock(), mock.Mock()]
 
-    with mock.patch("builtins.open", m_open, create=True):
+    with mock.patch(
+        "puppetmanager.management.commands.configbake.Configuration"
+    ) as mock_config:
+        mock_config.objects.all.return_value = mock_configs
+
         command = bakecommand.Command()
-        command.handle()
+        command.handle(None, path=["/etc/fingerpuppet"])
 
-        m_open.assert_called_once_with("TestConfig_init.pp", "w+")
-        m_open().write.assert_called_once_with("{}")
-
-
-@pytest.mark.django_db
-def test_configbake_creates_correct_directory_structure():
-    m_open = mock.mock_open()
-    configuration = Configuration(name="TestConfig", data="{}")
-    configuration.save()
-
-    with mock.patch("builtins.open", m_open, create=True):
-        with mock.patch("puppetmanager.management.commands.configbake.os") as mock_os:
-            mock_os.path.exists.return_value = False
-
-            command = bakecommand.Command()
-            command.handle(None, path=["/etc/fingerpuppet"])
-
-            mock_os.makedirs.assert_called_with(
-                "/etc/fingerpuppet/TestConfig/manifests"
-            )
-            m_open.assert_called_once_with(
-                "/etc/fingerpuppet/TestConfig/manifests/init.pp", "w+"
-            )
-            m_open().write.assert_called_once_with("{}")
+        for m in mock_configs:
+            m.bake_to_file.assert_called_with("/etc/fingerpuppet")
