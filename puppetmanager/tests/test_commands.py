@@ -96,3 +96,10 @@ def test_configbake_bakes_each_config_to_file():
 
         for m in mock_configs:
             m.bake_to_file.assert_called_with("/etc/fingerpuppet")
+
+
+def test_configbake_exceptions_on_no_path_supplied():
+    command = bakecommand.Command()
+
+    with pytest.raises(Exception):
+        command.handle(None, invalid=[""])
