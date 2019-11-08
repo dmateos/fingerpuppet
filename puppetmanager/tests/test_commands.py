@@ -83,7 +83,6 @@ def test_configbake_adds_argument_to_django_command_parser():
     mock_parser.add_argument.assert_called_with("path", nargs="+", type=str)
 
 
-@pytest.mark.django_db
 def test_configbake_bakes_each_config_to_file():
     mock_configs = [mock.Mock(), mock.Mock()]
 
@@ -93,7 +92,7 @@ def test_configbake_bakes_each_config_to_file():
         mock_config.objects.all.return_value = mock_configs
 
         command = bakecommand.Command()
-        command.handle(None, path=["/etc/fingerpuppets"])
+        command.handle(None, path=["/etc/fingerpuppet"])
 
         for m in mock_configs:
             m.bake_to_file.assert_called_with("/etc/fingerpuppet")
