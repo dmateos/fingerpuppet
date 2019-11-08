@@ -3,7 +3,14 @@
 {% load widget_tweaks %}
 
 {% block content %}
+  <a class="btn btn-success" href="{% url "classification_create" %}">New</a>
+
   {% for node in object_list %}
-  <p> {{ node.name }} </p>
+    <div class="row">
+      <div class="col-md-4"> {{ node.name }} </div>
+      <div class="col-md-4">
+        <a class="" href="{% url "classification_update" pk=node.id %}">Edit</a>
+      </div>
+    </div>
   {% endfor %}
 {% endblock %}

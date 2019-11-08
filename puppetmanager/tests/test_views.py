@@ -32,6 +32,30 @@ def test_classification_view_shows_entries(client):
 
 
 @pytest.mark.django_db
+def test_classification_view_create_classification(client):
+    response = client.post(
+        reverse("classification_create"), {"name": "ClassTest1"}, follow=True
+    )
+    assert response.status_code == 200
+    assert "ClassTest1" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_classification_view_update_classification(client):
+    classification = Classification(name="ClassTest1")
+    classification.save()
+
+    response = client.post(
+        reverse("classification_update", kwargs={"pk": classification.id}),
+        {"name": "ClassTest1Update"},
+        follow=True,
+    )
+
+    assert response.status_code == 200
+    assert "ClassTest1Update" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_configuration_view_shows_entries(client):
     configuration = Configuration(name="ConfigTest1")
     configuration.save()

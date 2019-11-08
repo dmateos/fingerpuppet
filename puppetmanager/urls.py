@@ -10,6 +10,16 @@ urlpatterns = [
         name="classification_list",
     ),
     path(
+        "classifications/new",
+        views.ClassificationCreate.as_view(),
+        name="classification_create",
+    ),
+    path(
+        "classifications/edit/<int:pk>",
+        views.ClassificationUpdate.as_view(),
+        name="classification_update",
+    ),
+    path(
         "configurations", views.ConfigurationList.as_view(), name="configuration_list"
     ),
 ]
