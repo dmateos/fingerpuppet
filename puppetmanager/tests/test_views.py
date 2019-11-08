@@ -67,3 +67,30 @@ def test_configuration_view_shows_entries(client):
     assert response.status_code == 200
     assert "ConfigTest1" in str(response.content)
     assert "ConfigTest2" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_configuration_view_create_configuration(client):
+    response = client.post(
+        reverse("configuration_create"),
+        {"name": "ConfigTest1", "data": "{}"},
+        follow=True,
+    )
+
+    assert response.status_code == 200
+    assert "ConfigTest1" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_configuration_view_update_configuration(client):
+    configuration = Configuration(name="ConfigTest1")
+    configuration.save()
+
+    response = client.post(
+        reverse("configuration_update", kwargs={"pk": configuration.id}),
+        {"name": "ConfigTest1Update"},
+        follow=True,
+    )
+
+    assert response.status_code == 200
+    assert "ConfigTest1Update" in str(response.content)

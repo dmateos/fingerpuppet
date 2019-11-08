@@ -22,4 +22,14 @@ urlpatterns = [
     path(
         "configurations", views.ConfigurationList.as_view(), name="configuration_list"
     ),
+    path(
+        "configurations/new",
+        views.ConfigurationCreate.as_view(),
+        name="configuration_create",
+    ),
+    path(
+        "configurations/edit/<int:pk>",
+        views.ConfigurationUpdate.as_view(),
+        name="configuration_update",
+    ),
 ]

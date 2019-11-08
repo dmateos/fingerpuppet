@@ -30,3 +30,17 @@ class ClassificationUpdate(UpdateView):
 class ConfigurationList(ListView):
     template_name = "configuration/list.html"
     queryset = Configuration.objects.all()
+
+
+class ConfigurationCreate(CreateView):
+    model = Configuration
+    template_name = "configuration/configuration_form.html"
+    success_url = reverse_lazy("configuration_list")
+    fields = ["name", "data"]
+
+
+class ConfigurationUpdate(UpdateView):
+    model = Configuration
+    template_name = "configuration/configuration_form.html"
+    success_url = reverse_lazy("configuration_list")
+    fields = ["name", "data"]
