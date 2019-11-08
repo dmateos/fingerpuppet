@@ -20,6 +20,11 @@ urlpatterns = [
         name="classification_update",
     ),
     path(
+        "classifications/delete/<int:pk>",
+        views.ClassificationDelete.as_view(),
+        name="classification_delete",
+    ),
+    path(
         "configurations", views.ConfigurationList.as_view(), name="configuration_list"
     ),
     path(
@@ -31,5 +36,10 @@ urlpatterns = [
         "configurations/edit/<int:pk>",
         views.ConfigurationUpdate.as_view(),
         name="configuration_update",
+    ),
+    path(
+        "configurations/delete/<int:pk>",
+        views.ConfigurationDelete.as_view(),
+        name="configuration_delete",
     ),
 ]

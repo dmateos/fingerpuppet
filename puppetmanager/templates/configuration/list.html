@@ -3,14 +3,18 @@
 {% load widget_tweaks %}
 
 {% block content %}
-  <a class="btn btn-success" href="{% url "configuration_create" %}">New</a>
+  <h2> Configurations </h2>
+  <table class="table">
+    <tbody>
+      {% for node in object_list %}
+        <tr>
+          <td> {{ node.name }} </td>
+          <td> <a class="" href="{% url "configuration_update" pk=node.id %}">Edit</a> </td>
+          <td> <a class="" href="{% url "configuration_delete" pk=node.id %}">Delete</a> </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-  {% for node in object_list %}
-    <div class="row">
-      <div class="col-md-4"> {{ node.name }} </div>
-      <div class="col-md-4">
-        <a class="" href="{% url "configuration_update" pk=node.id %}">Edit</a>
-      </div>
-    </div>
-  {% endfor %}
+  <a class="btn btn-success" href="{% url "configuration_create" %}">New</a>
 {% endblock %}

@@ -1,4 +1,4 @@
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Node, Classification, Configuration
 
@@ -27,6 +27,11 @@ class ClassificationUpdate(UpdateView):
     fields = ["name"]
 
 
+class ClassificationDelete(DeleteView):
+    model = Classification
+    success_url = reverse_lazy("classification_list")
+
+
 class ConfigurationList(ListView):
     template_name = "configuration/list.html"
     queryset = Configuration.objects.all()
@@ -44,3 +49,8 @@ class ConfigurationUpdate(UpdateView):
     template_name = "configuration/configuration_form.html"
     success_url = reverse_lazy("configuration_list")
     fields = ["name", "data"]
+
+
+class ConfigurationDelete(DeleteView):
+    model = Configuration
+    success_url = reverse_lazy("configuration_list")

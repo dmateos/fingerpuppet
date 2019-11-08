@@ -55,6 +55,10 @@ def test_classification_view_update_classification(client):
     assert "ClassTest1Update" in str(response.content)
 
 
+def test_classification_view_delete_classification(client):
+    assert False
+
+
 @pytest.mark.django_db
 def test_configuration_view_shows_entries(client):
     configuration = Configuration(name="ConfigTest1")
@@ -94,3 +98,8 @@ def test_configuration_view_update_configuration(client):
 
     assert response.status_code == 200
     assert "ConfigTest1Update" in str(response.content)
+
+
+@pytest.mark.django_db
+def test_configuration_view_delete_configuration(client):
+    assert False
