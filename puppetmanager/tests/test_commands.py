@@ -93,7 +93,7 @@ def test_configbake_bakes_each_config_to_file():
         mock_config.objects.all.return_value = mock_configs
 
         command = bakecommand.Command()
-        command.handle(None, path=["/etc/fingerpuppet"])
+        command.handle(None, path=["/etc/fingerpuppets"])
 
         for m in mock_configs:
             m.bake_to_file.assert_called_with("/etc/fingerpuppet")
