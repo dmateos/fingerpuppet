@@ -3,7 +3,20 @@
 {% load widget_tweaks %}
 
 {% block content %}
+<h2> Nodes </h2>
+<div class="row">
   {% for node in object_list %}
-  <p> {{ node.name }} </p>
+    <div class="col-md-3">
+      <div class="thumbnail alert alert-success">
+        <h3> {{ node.name }} </h3>
+        <div> Checkins: {{ node.total_checkins }} </div>
+        <p>
+          {% for clas in node.classifications.all %}
+            <div> {{ clas.name }} </div>
+          {% endfor %}
+        </p>
+      </div>
+    </div>
   {% endfor %}
+</div>
 {% endblock %}
