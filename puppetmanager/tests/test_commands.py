@@ -110,4 +110,10 @@ def test_configbake_creates_correct_directory_structure():
             command = bakecommand.Command()
             command.handle(None, path=["/etc/fingerpuppet"])
 
-            mock_os.makedirs.assert_called_with("/etc/fingerpuppet")
+            mock_os.makedirs.assert_called_with(
+                "/etc/fingerpuppet/TestConfig/manifests"
+            )
+            m_open.assert_called_once_with(
+                "/etc/fingerpuppet/TestConfig/manifests/init.pp", "w+"
+            )
+            m_open().write.assert_called_once_with("{}")
