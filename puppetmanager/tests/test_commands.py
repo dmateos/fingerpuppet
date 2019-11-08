@@ -75,6 +75,14 @@ def test_nodeclassify_prints_yaml_on_missing_name(capsys):
 # ConfigBake
 
 
+def test_configbake_adds_argument_to_django_command_parser():
+    mock_parser = mock.Mock()
+    command = bakecommand.Command()
+    command.add_arguments(mock_parser)
+
+    mock_parser.add_argument.assert_called_with("path", nargs="+", type=str)
+
+
 @pytest.mark.django_db
 def test_configbake_outputs_valid_recipe_files():
     m_open = mock.mock_open()
@@ -87,3 +95,19 @@ def test_configbake_outputs_valid_recipe_files():
 
         m_open.assert_called_once_with("TestConfig_init.pp", "w+")
         m_open().write.assert_called_once_with("{}")
+
+
+@pytest.mark.django_db
+def test_configbake_creates_correct_directory_structure():
+    m_open = mock.mock_open()
+    configuration = Configuration(name="TestConfig", data="{}")
+    configuration.save()
+
+    with mock.patch("builtins.open", m_open, create=True):
+        with mock.patch("puppetmanager.management.commands.configbake.os") as mock_os:
+            mock_os.path.exists.return_value = False
+
+            command = bakecommand.Command()
+            command.handle(None, path=["/etc/fingerpuppet"])
+
+            mock_os.makedirs.assert_called_with("/etc/fingerpuppet")
