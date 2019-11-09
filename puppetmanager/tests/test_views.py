@@ -18,6 +18,24 @@ def test_node_list_view_shows_nodes(client):
 
 
 @pytest.mark.django_db
+def test_node_view_update_node(client):
+    classification = Classification(name="ClassTest1")
+    classification.save()
+
+    node = Node(name="TestNode")
+    node.save()
+
+    response = client.post(
+        reverse("node_update", kwargs={"pk": node.id}),
+        {"classifications": [classification.id]},
+        follow=True,
+    )
+
+    assert response.status_code == 200
+    assert "ClassTest1" in str(response.content)
+
+
+@pytest.mark.django_db
 def test_classification_view_shows_entries(client):
     classification = Classification(name="ClassTest1")
     classification.save()

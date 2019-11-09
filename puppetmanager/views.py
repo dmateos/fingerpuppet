@@ -8,6 +8,13 @@ class NodeList(ListView):
     queryset = Node.objects.all()
 
 
+class NodeUpdate(UpdateView):
+    model = Node
+    template_name = "node/node_form.html"
+    success_url = reverse_lazy("node_list")
+    fields = ["classifications"]
+
+
 class ClassificationList(ListView):
     template_name = "classification/list.html"
     queryset = Classification.objects.all()

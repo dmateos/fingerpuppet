@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path("nodes", views.NodeList.as_view(), name="node_list"),
+    path("nodes/edit/<int:pk>", views.NodeUpdate.as_view(), name="node_update"),
     path(
         "classifications",
         views.ClassificationList.as_view(),
