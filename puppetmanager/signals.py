@@ -6,7 +6,6 @@ from .models import Configuration
 
 @receiver(post_save, sender=Configuration, dispatch_uid="config_save_update_files")
 def configuration_update(sender, instance, **kwargs):
-    print("hello world")
     module_path = os.environ.get("PUPPET_MODULE_PATH", False)
     if module_path:
         instance.bake_to_file(module_path)
