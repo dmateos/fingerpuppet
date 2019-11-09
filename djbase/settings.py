@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "bootstrap4",
-    "puppetmanager",
     "widget_tweaks",
     "engine.apps.EngineConfig",
+    "puppetmanager.apps.PuppetmanagerConfig",
 ]
 
 MIDDLEWARE = [
