@@ -1,5 +1,4 @@
 {% extends 'engine/base.html' %}
-
 {% load widget_tweaks %}
 
 {% block content %}
@@ -15,6 +14,5 @@
       {% endfor %}
     </tbody>
   </table>
-
   <a class="btn btn-success" href="{% url "classification_create" %}">New</a>
 {% endblock %}

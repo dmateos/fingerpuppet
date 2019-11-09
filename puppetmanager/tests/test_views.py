@@ -55,8 +55,17 @@ def test_classification_view_update_classification(client):
     assert "ClassTest1Update" in str(response.content)
 
 
+@pytest.mark.django_db
 def test_classification_view_delete_classification(client):
-    assert False
+    classification = Classification(name="ClassTest1")
+    classification.save()
+
+    response = client.post(
+        reverse("classification_delete", kwargs={"pk": classification.id}), follow=True
+    )
+
+    assert response.status_code == 200
+    assert "ClassTest1" not in str(response.content)
 
 
 @pytest.mark.django_db
@@ -102,4 +111,12 @@ def test_configuration_view_update_configuration(client):
 
 @pytest.mark.django_db
 def test_configuration_view_delete_configuration(client):
-    assert False
+    configuration = Configuration(name="ConfigTest1")
+    configuration.save()
+
+    response = client.post(
+        reverse("configuration_delete", kwargs={"pk": configuration.id}), follow=True
+    )
+
+    assert response.status_code == 200
+    assert "ConfigTest1" not in str(response.content)

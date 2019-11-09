@@ -17,18 +17,19 @@ class ClassificationCreate(CreateView):
     model = Classification
     template_name = "classification/classification_form.html"
     success_url = reverse_lazy("classification_list")
-    fields = ["name"]
+    fields = ["name", "configurations"]
 
 
 class ClassificationUpdate(UpdateView):
     model = Classification
     template_name = "classification/classification_form.html"
     success_url = reverse_lazy("classification_list")
-    fields = ["name"]
+    fields = ["name", "configurations"]
 
 
 class ClassificationDelete(DeleteView):
     model = Classification
+    template_name = "confirm_action.html"
     success_url = reverse_lazy("classification_list")
 
 
@@ -53,4 +54,5 @@ class ConfigurationUpdate(UpdateView):
 
 class ConfigurationDelete(DeleteView):
     model = Configuration
+    template_name = "confirm_action.html"
     success_url = reverse_lazy("configuration_list")
