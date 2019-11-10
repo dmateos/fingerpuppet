@@ -23,6 +23,9 @@ class Configuration(models.Model):
         with open("{}/init.pp".format(config_path), "w+") as f:
             f.write(self.data)
 
+    def restart_puppet(self):
+        return False
+
 
 class Classification(models.Model):
     """

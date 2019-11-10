@@ -147,7 +147,12 @@ def test_configuration_signal_saves_only_when_path_set():
     mock_config.bake_to_file.assert_called_with("/test")
 
 
+def test_configuration_restart_puppet_service_hack():
+    configuration = Configuration(name="testconfiguration")
+    assert configuration.restart_puppet()
+
+
 # Classification
 def test_classification_turns_into_string():
-   classification = Classification(name="testclassification")
-   assert str(classification) == "testclassification"
+    classification = Classification(name="testclassification")
+    assert str(classification) == "testclassification"
