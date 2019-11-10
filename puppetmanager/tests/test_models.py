@@ -138,11 +138,6 @@ def test_configuration_bake_data_to_file_writes_file():
 
 
 def test_configuration_signal_saves_only_when_path_set():
-    pass
-
-
-# Classification
-def test_classification_turns_into_string():
     mock_config = mock.Mock()
     configuration_update(None, mock_config)
     assert not mock_config.bake_to_file.called
@@ -150,3 +145,9 @@ def test_classification_turns_into_string():
     os.environ["PUPPET_MODULE_PATH"] = "/test"
     configuration_update(None, mock_config)
     mock_config.bake_to_file.assert_called_with("/test")
+
+
+# Classification
+def test_classification_turns_into_string():
+   classification = Classification(name="testclassification")
+   assert str(classification) == "testclassification"
