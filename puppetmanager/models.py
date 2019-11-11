@@ -25,7 +25,7 @@ class Configuration(models.Model):
             f.write(self.data)
 
     def restart_puppet(self):
-        subprocess.run(["sudo systemctl restart puppet"])
+        subprocess.run(["sudo", "systemctl", "restart", "puppet-master"])
 
 
 class Classification(models.Model):
