@@ -149,7 +149,9 @@ def test_configuration_signal_saves_only_when_path_set():
 
 def test_configuration_restart_puppet_service_hack():
     configuration = Configuration(name="testconfiguration")
-    assert configuration.restart_puppet()
+    with mock.patch("puppetmanager.models.subprocess") as mock_subp:
+        configuration.restart_puppet()
+        mock_subp.run.assert_called()
 
 
 # Classification

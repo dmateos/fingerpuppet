@@ -9,3 +9,4 @@ def configuration_update(sender, instance, **kwargs):
     module_path = os.environ.get("PUPPET_MODULE_PATH", False)
     if module_path:
         instance.bake_to_file(module_path)
+        instance.restart_puppet()

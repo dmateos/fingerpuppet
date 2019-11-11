@@ -1,5 +1,6 @@
 import yaml
 import os
+import subprocess
 from django.db import models
 
 
@@ -24,7 +25,7 @@ class Configuration(models.Model):
             f.write(self.data)
 
     def restart_puppet(self):
-        return False
+        subprocess.run(["sudo systemctl restart puppet"])
 
 
 class Classification(models.Model):
