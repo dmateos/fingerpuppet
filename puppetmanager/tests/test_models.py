@@ -14,9 +14,10 @@ def test_node_turns_into_string():
 
 @pytest.mark.django_db
 def test_node_external_classify_format():
-    expected_data = {"classes": {}, "parameters": {}, "environment": "production"}
     expected_data = yaml.dump(
-        expected_data, default_flow_style=False, explicit_start=True
+        {"classes": {}, "parameters": {}, "environment": "production"},
+        default_flow_style=False,
+        explicit_start=True,
     )
 
     node = Node(name="test node")
@@ -29,14 +30,14 @@ def test_node_external_classify_format():
 
 @pytest.mark.django_db
 def test_node_external_classify_lists_configurations_in_classification():
-    expected_data = {
-        "classes": {"testconfiguration": {}, "testconfiguration2": {}},
-        "parameters": {},
-        "environment": "production",
-    }
-
     expected_data = yaml.dump(
-        expected_data, default_flow_style=False, explicit_start=True
+        {
+            "classes": {"testconfiguration": {}, "testconfiguration2": {}},
+            "parameters": {},
+            "environment": "production",
+        },
+        default_flow_style=False,
+        explicit_start=True,
     )
 
     configuration = Configuration(name="testconfiguration")
