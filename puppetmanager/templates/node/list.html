@@ -6,8 +6,8 @@
 <h2> Nodes </h2>
 <div class="row">
   {% for node in object_list %}
-    <div class="col-md-3">
-      <div class="thumbnail alert alert-success">
+    <div class="col-md-4 alert alert-success">
+      <div class="m-3">
         <h3> <a href="{% url "node_update" pk=node.id %}"> {{ node.name }} </a></h3>
         <div> Checkins: {{ node.total_checkins }} </div>
         <p>
